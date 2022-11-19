@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+# VS location
+BreakoutGL/x64
+BreakoutGL/.vs
+include/glm
