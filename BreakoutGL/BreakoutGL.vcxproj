@@ -138,11 +138,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\framebuffer.cpp" />
+    <ClCompile Include="..\src\Game.cpp" />
     <ClCompile Include="..\src\glad.c" />
     <ClCompile Include="..\src\instance.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\outline.cpp" />
     <ClCompile Include="..\src\skybox.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Game.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
