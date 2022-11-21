@@ -16,14 +16,14 @@ void processInput(GLFWwindow* window);
 void fb(GLFWwindow* window)
 {
 
-    auto vertexShader = ogl::VertexShader("coord.vs");
-    auto fbVertex = ogl::VertexShader("fb.vs");
-    auto fbFragment = ogl::FragmentShader("fb.fs");
-    auto fbFragment2 = ogl::FragmentShader("fb2.fs");
+    auto vertexShader = Bout::VertexShader("coord.vs");
+    auto fbVertex = Bout::VertexShader("fb.vs");
+    auto fbFragment = Bout::FragmentShader("fb.fs");
+    auto fbFragment2 = Bout::FragmentShader("fb2.fs");
 
 
-    auto shaderProgram = ogl::ShaderProgram{ vertexShader, fbFragment };
-    auto fbShaderProgram = ogl::ShaderProgram{ fbVertex, fbFragment2 };
+    auto shaderProgram = Bout::ShaderProgram{ vertexShader, fbFragment };
+    auto fbShaderProgram = Bout::ShaderProgram{ fbVertex, fbFragment2 };
 
 
     float quadVertices[] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.

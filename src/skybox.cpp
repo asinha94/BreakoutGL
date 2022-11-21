@@ -96,15 +96,15 @@ unsigned int loadCubeMap(const std::vector<std::string>& filenames)
 void skybox(GLFWwindow* window)
 {
 
-    auto vertexShader = ogl::VertexShader("coord.vs");
-    auto skyboxShader = ogl::VertexShader("skybox.vs");
-    auto fullFragmentShader = ogl::FragmentShader("texture.fs");
-    auto outlineFragmentShader = ogl::FragmentShader("single_color.fs");
-    auto skyboxFragentShader = ogl::FragmentShader("skybox.fs");
+    auto vertexShader = Bout::VertexShader("coord.vs");
+    auto skyboxShader = Bout::VertexShader("skybox.vs");
+    auto fullFragmentShader = Bout::FragmentShader("texture.fs");
+    auto outlineFragmentShader = Bout::FragmentShader("single_color.fs");
+    auto skyboxFragentShader = Bout::FragmentShader("skybox.fs");
 
-    auto shaderProgram = ogl::ShaderProgram(vertexShader, fullFragmentShader);
-    auto outlineShaderProgram = ogl::ShaderProgram(vertexShader, outlineFragmentShader);
-    auto skyboxProgram = ogl::ShaderProgram(skyboxShader, skyboxFragentShader);
+    auto shaderProgram = Bout::ShaderProgram(vertexShader, fullFragmentShader);
+    auto outlineShaderProgram = Bout::ShaderProgram(vertexShader, outlineFragmentShader);
+    auto skyboxProgram = Bout::ShaderProgram(skyboxShader, skyboxFragentShader);
 
     float cubeVertices[] = {
         // Back face

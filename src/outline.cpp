@@ -58,12 +58,12 @@ static void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 void outline(GLFWwindow* window)
 {
 
-    auto vertexShader = ogl::VertexShader("coord.vs");
-    auto fullFragmentShader = ogl::FragmentShader("texture.fs");
-    auto outlineFragmentShader = ogl::FragmentShader("single_color.fs");
+    auto vertexShader = Bout::VertexShader("coord.vs");
+    auto fullFragmentShader = Bout::FragmentShader("texture.fs");
+    auto outlineFragmentShader = Bout::FragmentShader("single_color.fs");
 
-    auto shaderProgram = ogl::ShaderProgram(vertexShader, fullFragmentShader);
-    auto outlineShaderProgram = ogl::ShaderProgram(vertexShader, outlineFragmentShader);
+    auto shaderProgram = Bout::ShaderProgram(vertexShader, fullFragmentShader);
+    auto outlineShaderProgram = Bout::ShaderProgram(vertexShader, outlineFragmentShader);
 
     // Cube (not compatibable with face culling)
     float vertices[] = {

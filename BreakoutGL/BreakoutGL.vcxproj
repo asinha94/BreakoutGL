@@ -139,14 +139,28 @@
   <ItemGroup>
     <ClCompile Include="..\src\framebuffer.cpp" />
     <ClCompile Include="..\src\Game.cpp" />
+    <ClCompile Include="..\src\GameLevel.cpp" />
+    <ClCompile Include="..\src\GameObject.cpp" />
     <ClCompile Include="..\src\glad.c" />
     <ClCompile Include="..\src\instance.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\outline.cpp" />
+    <ClCompile Include="..\src\resource_manager.cpp" />
     <ClCompile Include="..\src\skybox.cpp" />
+    <ClCompile Include="..\src\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Game.h" />
+    <ClInclude Include="..\src\GameLevel.h" />
+    <ClInclude Include="..\src\GameObject.h" />
+    <ClInclude Include="..\src\resource_manager.h" />
+    <ClInclude Include="..\src\Shader.h" />
+    <ClInclude Include="..\src\sprite.h" />
+    <ClInclude Include="..\src\texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\shaders\sprite.frag" />
+    <None Include="..\shaders\sprite.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

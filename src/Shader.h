@@ -1,24 +1,28 @@
 #pragma once
 
+#include <cstdio>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
-
-namespace ogl {
+namespace Bout {
 	class ShaderProgram;
 	
-	class Shader {
+	class ShaderStage {
 		friend class ShaderProgram;
 	public:
-		Shader(const char* fname, unsigned int id) :
+		ShaderStage(const char* fname, unsigned int id) :
 			m_filename{ fname},
 			m_id{ id }
 		{
-			auto f = std::ifstream("C:\\Projects\\BreakoutGL\\shaders\\" + m_filename);
+			auto full_path = std::string("C:\\Projects\\BreakoutGL\\shaders\\") + m_filename;
+			auto f = std::ifstream(full_path);
 			auto s = std::stringstream{};
 
 			try {
@@ -30,9 +34,14 @@ namespace ogl {
 				return;
 			}
 
-			compile(s.str());
+			auto CodeString = s.str();
+			if (CodeString.size() == 0) {
+				std::cout << "Failed to load shader code for " << full_path << '\n';
+				return;
+			}
+			compile(CodeString);
 		};
-		virtual ~Shader() {
+		virtual ~ShaderStage() {
 			if (m_id)
 				glDeleteShader(m_id);
 		}
@@ -42,7 +51,7 @@ namespace ogl {
 		unsigned int m_id;
 
 	private:
-		bool compile(const std::string& code) {
+		void compile(const std::string &code) {
 			auto code_cstr = code.c_str();
 			glShaderSource(m_id, 1, &code_cstr, NULL);
 			glCompileShader(m_id);
@@ -54,43 +63,107 @@ namespace ogl {
 			{
 				glGetShaderInfoLog(m_id, 512, NULL, infoLog);
 				std::cout << m_filename << ": ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
-				return false;
 			}
-			return true;
 		}
 		
 	};
 
-	class VertexShader : public Shader{
+	class VertexShader : public ShaderStage {
 	public:
 		VertexShader(const char* fname) :
-			Shader(fname, glCreateShader(GL_VERTEX_SHADER)) {}
+			ShaderStage(fname, glCreateShader(GL_VERTEX_SHADER)) {}
 	};
 
-	class FragmentShader : public Shader {
+	class FragmentShader : public ShaderStage {
 	public:
 		FragmentShader(const char* fname) :
-			Shader(fname, glCreateShader(GL_FRAGMENT_SHADER)) {}
+			ShaderStage(fname, glCreateShader(GL_FRAGMENT_SHADER)) {}
+	};
+
+	class GeometryShader : public ShaderStage {
+	public:
+		GeometryShader(const char* fname) :
+			ShaderStage(fname, glCreateShader(GL_GEOMETRY_SHADER)) {}
 	};
 
 	class ShaderProgram {
 	public:
+
+		ShaderProgram() : m_id{ 0 } {}
+
 		ShaderProgram(VertexShader vs, FragmentShader fs) :
-			m_id{ glCreateProgram() },
-			m_vs{ vs },
-			m_fs{ fs }
+			m_id{ glCreateProgram() }
 		{
 			glAttachShader(m_id, vs.m_id);
 			glAttachShader(m_id, fs.m_id);
 			glLinkProgram(m_id);
 		}
 
-		void use() { glUseProgram(this->m_id); }
+		ShaderProgram(VertexShader vs, FragmentShader fs, GeometryShader gs) :
+			m_id{ glCreateProgram() }
+		{
+			glAttachShader(m_id, vs.m_id);
+			glAttachShader(m_id, fs.m_id);
+			glAttachShader(m_id, gs.m_id);
+			glLinkProgram(m_id);
+		}
+
+		ShaderProgram(const ShaderProgram& rhs)
+		{
+			this->m_id = rhs.m_id; 
+		}
+
+		void SetFloat(const char* name, float value)
+		{
+			glUniform1f(glGetUniformLocation(this->m_id, name), value);
+		}
+
+		void SetInteger(const char* name, int value)
+		{
+			glUniform1i(glGetUniformLocation(this->m_id, name), value);
+		}
+
+		void SetVector2f(const char* name, float x, float y)
+		{
+			glUniform2f(glGetUniformLocation(this->m_id, name), x, y);
+		}
+
+		void SetVector2f(const char* name, const glm::vec2& value)
+		{
+			glUniform2f(glGetUniformLocation(this->m_id, name), value.x, value.y);
+		}
+
+		void SetVector3f(const char* name, float x, float y, float z)
+		{
+			glUniform3f(glGetUniformLocation(this->m_id, name), x, y, z);
+		}
+
+		void SetVector3f(const char* name, const glm::vec3& value)
+		{
+			glUniform3f(glGetUniformLocation(this->m_id, name), value.x, value.y, value.z);
+		}
+
+		void SetVector4f(const char* name, float x, float y, float z, float w)
+		{
+			glUniform4f(glGetUniformLocation(this->m_id, name), x, y, z, w);
+		}
+
+		void SetVector4f(const char* name, const glm::vec4& value)
+		{
+			glUniform4f(glGetUniformLocation(this->m_id, name), value.x, value.y, value.z, value.w);
+		}
+
+		void SetMatrix4(const char* name, const glm::mat4& matrix)
+		{
+			glUniformMatrix4fv(glGetUniformLocation(this->m_id, name), 1, false, glm::value_ptr(matrix));
+		}
+
+		void use()
+		{
+			glUseProgram(this->m_id);
+		}
 	//private:
 		unsigned int m_id;
-		VertexShader m_vs;
-		FragmentShader m_fs;
-
 	};
 
 

@@ -17,9 +17,9 @@ void processInput(GLFWwindow* window);
 
 void instance(GLFWwindow* window)
 {
-    auto vertex = ogl::VertexShader("instance1.vert");
-    auto fragment = ogl::FragmentShader("instance1.frag");
-    auto shader = ogl::ShaderProgram(vertex, fragment);
+    auto vertex = Bout::VertexShader("instance1.vert");
+    auto fragment = Bout::FragmentShader("instance1.frag");
+    auto shader = Bout::ShaderProgram(vertex, fragment);
 
 	float quads[] = {
      // positions     // colors
