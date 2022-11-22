@@ -43,5 +43,5 @@ namespace Bout {
         this->Velocity = velocity;
         this->Stuck = true;
 
-
+    }
 }

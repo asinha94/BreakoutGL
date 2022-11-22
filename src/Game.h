@@ -27,7 +27,7 @@ namespace Bout {
 		Game(int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT);
 		void Init();
 		void ProcessInput(float);
-		void Update();
+		void Update(float);
 		void Render();
 		GLFWwindow* getWindow() { return m_window; }
 		~Game();

@@ -118,7 +118,7 @@ int main()
         // -----
         processInput(window);
         game.ProcessInput((float) deltatime);
-        game.Update();
+        game.Update((float)deltatime);
         game.Render();
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Ball.cpp" />
     <ClCompile Include="..\src\framebuffer.cpp" />
     <ClCompile Include="..\src\Game.cpp" />
     <ClCompile Include="..\src\GameLevel.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="..\src\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\Ball.h" />
     <ClInclude Include="..\src\Game.h" />
     <ClInclude Include="..\src\GameLevel.h" />
     <ClInclude Include="..\src\GameObject.h" />
