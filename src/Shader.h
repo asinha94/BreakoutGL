@@ -21,8 +21,8 @@ namespace Bout {
 			m_filename{ fname},
 			m_id{ id }
 		{
-			auto full_path = std::string("C:\\Projects\\BreakoutGL\\shaders\\") + m_filename;
-			auto f = std::ifstream(full_path);
+
+			auto f = std::ifstream(m_filename);
 			auto s = std::stringstream{};
 
 			try {
@@ -36,7 +36,7 @@ namespace Bout {
 
 			auto CodeString = s.str();
 			if (CodeString.size() == 0) {
-				std::cout << "Failed to load shader code for " << full_path << '\n';
+				std::cout << "Failed to load shader code for " << m_filename << '\n';
 				return;
 			}
 			compile(CodeString);

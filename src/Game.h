@@ -7,7 +7,12 @@
 //local
 
 
+#ifdef __APPLE__
+#define BOUT_OPENGL_MAJOR_VERSION 3
+#else
 #define BOUT_OPENGL_MAJOR_VERSION 4
+#endif
+
 #define BOUT_OPENGL_MINOR_VERSION 3
 
 const int DEFAULT_WIDTH  = 800;

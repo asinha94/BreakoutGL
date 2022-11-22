@@ -11,6 +11,7 @@
 #include "sprite.h"
 #include "resource_manager.h"
 #include "Ball.h"
+#include "Path.h"
 
 
 namespace Bout {
@@ -41,6 +42,10 @@ namespace Bout {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, BOUT_OPENGL_MAJOR_VERSION);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, BOUT_OPENGL_MINOR_VERSION);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#ifdef __APPLE__
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+
 		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
 		m_window = glfwCreateWindow(m_width, m_height, "Breakout", NULL, NULL);
@@ -65,7 +70,7 @@ namespace Bout {
 
 	void Game::Init()
 	{
-		auto shader = ResourceManager::LoadShader("sprite.vert", "sprite.frag", nullptr, "sprite");
+		auto shader = ResourceManager::LoadShader(PATH("shaders/sprite.vert"), PATH("shaders/sprite.frag"), nullptr, "sprite");
 		auto projection = glm::ortho(0.f, (float)this->m_width, (float)this->m_height, 0.f, -1.f, 1.f);
 		
 		shader.use();
@@ -73,14 +78,14 @@ namespace Bout {
 		shader.SetMatrix4("projection", projection);
 		
 		renderer = new SpriteRenderer(shader);
-		ResourceManager::LoadTexture("C:\\Projects\\BreakoutGL\\resources\\textures\\background.jpg", false, "background");
-		ResourceManager::LoadTexture("C:\\Projects\\BreakoutGL\\resources\\textures\\block.png", false, "block");
-		ResourceManager::LoadTexture("C:\\Projects\\BreakoutGL\\resources\\textures\\block_solid.png", false, "block_solid");
+		ResourceManager::LoadTexture(PATH("resources/textures/background.jpg"), false, "background");
+		ResourceManager::LoadTexture(PATH("resources/textures/block.png"), false, "block");
+		ResourceManager::LoadTexture(PATH("resources/textures/block_solid.png"), false, "block_solid");
 
-		GameLevel one; one.Load("C:\\Projects\\BreakoutGL\\resources\\levels\\level1.txt", this->m_width, this->m_height / 2);
-		GameLevel two; two.Load("C:\\Projects\\BreakoutGL\\resources\\levels\\level2.txt", this->m_width, this->m_height / 2);
-		GameLevel three; three.Load("C:\\Projects\\BreakoutGL\\resources\\levels\\level3.txt", this->m_width, this->m_height / 2);
-		GameLevel four; four.Load("C:\\Projects\\BreakoutGL\\resources\\levels\\level4.txt", this->m_width, this->m_height / 2);
+		GameLevel one; one.Load(PATH("resources/levels/level1.txt"), this->m_width, this->m_height / 2);
+		GameLevel two; two.Load(PATH("resources/levels/level2.txt"), this->m_width, this->m_height / 2);
+		GameLevel three; three.Load(PATH("resources/levels/level3.txt"), this->m_width, this->m_height / 2);
+		GameLevel four; four.Load(PATH("resources/levels/level4.txt"), this->m_width, this->m_height / 2);
 		
 		this->Levels.push_back(one);
 		this->Levels.push_back(two);
@@ -88,12 +93,12 @@ namespace Bout {
 		this->Levels.push_back(four);
 
 		// Initialize the paddle bar
-		ResourceManager::LoadTexture("C:\\Projects\\BreakoutGL\\resources\\textures\\paddle.png", true, "paddle");
+		ResourceManager::LoadTexture(PATH("resources/textures/paddle.png"), true, "paddle");
 		glm::vec2 playerPos = glm::vec2( ((m_width - PLAYER_SIZE.x) / 2.0f), m_height - PLAYER_SIZE.y);
 		auto paddle = ResourceManager::GetTexture("paddle");
 		Player = new GameObject(playerPos, PLAYER_SIZE, paddle);
 
-		ResourceManager::LoadTexture("C:\\Projects\\BreakoutGL\\resources\\textures\\awesomeface.png", true, "face");
+		ResourceManager::LoadTexture(PATH("resources/textures/awesomeface.png"), true, "face");
 		auto ballPos = playerPos + glm::vec2(PLAYER_SIZE.x / 2.f - BALL_RADIUS, -BALL_RADIUS * 2.0f);
 		auto face = ResourceManager::GetTexture("face");
 		Ball = new BallObject(ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, face);
