@@ -1,3 +1,4 @@
+#include <tuple>
 #include "Ball.h"
 
 
@@ -44,4 +45,65 @@ namespace Bout {
         this->Stuck = true;
 
     }
+
+    bool BallObject::CheckCollisionAABB(GameObject& brick)
+    {
+        // Test the overlap of both boxes at the same imt
+        bool collisionX = this->Position.x + this->Size.x >= brick.Position.x
+            && brick.Position.x + brick.Size.x >= this->Position.x;
+
+        bool collisionY = this->Position.y + this->Size.y >= brick.Position.y
+            && brick.Position.y + brick.Size.y >= this->Position.y;
+
+        return collisionX && collisionY;
+    }
+
+    Direction VectorDirection(glm::vec2 target)
+    {
+        glm::vec2 compass[] = {
+            glm::vec2(0.0f, 1.0f),	// up
+            glm::vec2(1.0f, 0.0f),	// right
+            glm::vec2(0.0f, -1.0f),	// down
+            glm::vec2(-1.0f, 0.0f)	// left
+        };
+
+        int best_match = -1;
+        float max = 0.f;
+        for (int i = 0; i < 4; ++i) {
+            float dot_product = glm::dot(glm::normalize(target), compass[i]);
+            if (dot_product > max) {
+                max = dot_product;
+                best_match = i;
+            }
+        }
+
+        return (Direction)best_match;
+    }
+
+    Collision BallObject::CheckCollisionCircle(GameObject& brick)
+    {
+        // Get center of circle
+        auto center = this->Position + this->Radius;
+        
+        // Get half extents to clamp position
+        auto aabb_half_extents = brick.Size / 2.f;
+        auto aabb_center = brick.Position + aabb_half_extents;
+
+        // Get difference vector from center of 2 objects
+        auto difference = center - aabb_center;
+        auto clamped = glm::clamp(difference, -aabb_half_extents, aabb_half_extents);
+        
+        // Find the closest point based on the clamped vector from center
+        auto closest = aabb_center + clamped;
+        difference = closest - center;
+        
+        
+        if (glm::length(difference) < this->Radius)
+            // We return the difference so we can move the ball back to that position
+            // So objects dont merge into each other
+            return std::make_tuple(true, VectorDirection(difference), difference);
+        return std::make_tuple(false, UP, glm::vec2(0.0f, 0.0f));;
+    }
+
+
 }

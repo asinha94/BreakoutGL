@@ -45,5 +45,10 @@ namespace Bout {
 		int State;
 		bool wait_for_release_d;
 		bool wait_for_release_a;
+
+		void DoCollisions();
+		// reset
+		void ResetLevel();
+		void ResetPlayer();
 	};
 }

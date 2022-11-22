@@ -27,6 +27,9 @@ namespace Bout {
             if (tileData.size() > 0)
                 this->init(tileData, levelWidth, levelHeight);
         }
+        else {
+            std::cout << "Couldn't find level file: " << file << '\n';
+        }
     }
 
 
@@ -75,15 +78,15 @@ namespace Bout {
 
     void GameLevel::Draw(SpriteRenderer& renderer)
     {
-        for (GameObject& tile : this->Bricks)
-            if (!tile.Destroyed)
-                tile.Draw(renderer);
+        for (GameObject& brick : this->Bricks)
+            if (!brick.Destroyed)
+                brick.Draw(renderer);
     }
 
     bool GameLevel::IsCompleted()
     {
-        for (GameObject& tile : this->Bricks)
-            if (!tile.IsSolid && !tile.Destroyed)
+        for (GameObject& brick : this->Bricks)
+            if (!brick.IsSolid && !brick.Destroyed)
                 return false;
         return true;
     }
