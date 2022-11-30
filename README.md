@@ -2,7 +2,9 @@
 
 Here's my implementation of the classic BrickBreaker developed with OpenGL and GLFW. Major kudos to [LearnOpenGL](https://learnopengl.com/) which walks though all the basics of graphics rendering and basic gamedev techniques.
 
-![](https://github.com/asinha94/BreakoutGL/blob/master/breakout.gif)
+![](https://github.com/asinha94/BreakoutGL/blob/main/breakout.gif)
+
+Apologies for the choppy gif, I didn't look over any of the encoding options.
 
 # TODO	
 - shader class doesn't detect file not found
