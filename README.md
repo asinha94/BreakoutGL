@@ -4,7 +4,7 @@ Here's my implementation of the classic BrickBreaker developed with OpenGL and G
 
 ![](https://github.com/asinha94/BreakoutGL/blob/main/breakout.gif)
 
-Apologies for the choppy gif, I didn't look over any of the encoding options.
+Apologies for the choppy gif, I didn't look over any of the encoding options before creating the gif. Looks a lot better in person I swear!
 
 # TODO	
 - shader class doesn't detect file not found
